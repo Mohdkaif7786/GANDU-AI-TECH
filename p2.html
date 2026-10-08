@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Catch the Balls Game</title>
+
+    <style>
+        body {
+            margin: 0;
+            background-color: black;
+            overflow: hidden;
+            font-family: Arial;
+        }
+
+        #game {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            background-color: lightblue;
+            overflow: hidden;
+        }
+
+        #player {
+            width: 100px;
+            height: 20px;
+            background-color: blue;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+
+        .ball {
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        #score {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 25px;
+            color: black;
+            z-index: 10;
+            font-weight: bold;
+        }
+
+        #gameOver {
+            display: none;
+            position: absolute;
+            top: 40%;
+            width: 100%;
+            text-align: center;
+            font-size: 40px;
+            color: red;
+            font-weight: bold;
+            z-index: 20;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="game">
+
+        <div id="score">Score: 0</div>
+
+        <div id="player"></div>
+
+        <!-- 3 balls -->
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+
+        <div id="gameOver"></div>
+
+    </div>
+
+    <script>
+
+        var player;
+        var balls;
+
+        var playerX = 50;
+        var score = 0;
+        var gameRunning = true;
+
+        var ballData = [
+            {
+                x: 10,
+                y: 0,
+                dx: 2,
+                dy: 3,
+                color: "red"
+            },
+            {
+                x: 50,
+                y: -200,
+                dx: -2.5,
+                dy: 4,
+                color: "green"
+            },
+            {
+                x: 80,
+                y: -400,
+                dx: 3,
+                dy: 3.5,
+                color: "purple"
+            }
+        ];
+
+        function startGame() {
+
+            player = document.getElementById("player");
+            balls = document.querySelectorAll(".ball");
+
+            // Give each ball a different color
+            for (var i = 0; i < balls.length; i++) {
+                balls[i].style.backgroundColor = ballData[i].color;
+            }
+
+            document.addEventListener("keydown", movePlayer);
+
+            setInterval(gameLoop, 20);
+        }
+
+
+        function movePlayer(event) {
+
+            if (event.key == "ArrowLeft") {
+                playerX -= 3;
+            }
+
+            if (event.key == "ArrowRight") {
+                playerX += 3;
+            }
+
+            if (playerX < 5) {
+                playerX = 5;
+            }
+
+            if (playerX > 95) {
+                playerX = 95;
+            }
+
+            player.style.left = playerX + "%";
+        }
+
+
+        function gameLoop() {
+
+            if (!gameRunning) {
+                return;
+            }
+
+            var playerRect = player.getBoundingClientRect();
+
+            for (var i = 0; i < balls.length; i++) {
+
+                var ball = balls[i];
+                var data = ballData[i];
+
+                // Move ball
+                data.x += data.dx;
+                data.y += data.dy;
+
+                // Bounce from left wall
+                if (data.x <= 0) {
+                    data.x = 0;
+                    data.dx = Math.abs(data.dx);
+                }
+
+                // Bounce from right wall
+                if (data.x >= 97) {
+                    data.x = 97;
+                    data.dx = -Math.abs(data.dx);
+                }
+
+                // Display ball
+                ball.style.left = data.x + "%";
+                ball.style.top = data.y + "px";
+
+                var ballRect = ball.getBoundingClientRect();
+
+                // Catch the ball
+                if (
+                    ballRect.bottom >= playerRect.top &&
+                    ballRect.top <= playerRect.bottom &&
+                    ballRect.left < playerRect.right &&
+                    ballRect.right > playerRect.left
+                ) {
+
+                    score++;
+
+                    document.getElementById("score").innerHTML =
+                        "Score: " + score;
+
+                    // Reset this ball
+                    data.y = -30;
+
+                    data.x = Math.random() * 90;
+
+                    // Increase speed
+                    data.dy += 0.2;
+
+                    if (data.dx > 0) {
+                        data.dx += 0.1;
+                    } else {
+                        data.dx -= 0.1;
+                    }
+                }
+
+                // Ball missed
+                if (data.y > window.innerHeight) {
+
+                    gameRunning = false;
+
+                    document.getElementById("gameOver").style.display =
+                        "block";
+
+                    document.getElementById("gameOver").innerHTML =
+                        "GAME OVER<br>Score: " + score;
+                }
+            }
+        }
+
+        window.onload = startGame;
+
+    </script>
+
+</body>
+</html>

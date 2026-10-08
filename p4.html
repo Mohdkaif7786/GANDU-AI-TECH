@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Calculator</title>
+</head>
+<body>
+
+    <h2>Simple Calculator</h2>
+
+    <input type="number" id="num1" placeholder="First Number">
+    <input type="number" id="num2" placeholder="Second Number">
+
+    <br><br>
+
+    <button onclick="calculate('+')">Add</button>
+    <button onclick="calculate('-')">Subtract</button>
+    <button onclick="calculate('*')">Multiply</button>
+    <button onclick="calculate('/')">Divide</button>
+
+    <h3>Answer: <span id="answer">0</span></h3>
+
+    <script>
+        function calculate(operator) {
+            let num1 = parseFloat(document.getElementById("num1").value);
+            let num2 = parseFloat(document.getElementById("num2").value);
+            let answer;
+
+            switch (operator) {
+                case '+':
+                    answer = num1 + num2;
+                    break;
+
+                case '-':
+                    answer = num1 - num2;
+                    break;
+
+                case '*':
+                    answer = num1 * num2;
+                    break;
+
+                case '/':
+                    answer = num1 / num2;
+                    break;
+            }
+
+            document.getElementById("answer").textContent = answer;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+</head>
+<body>
+
+<h2>Simple Calculator</h2>
+
+<input type="number" id="n1" placeholder="Enter first number">
+<input type="number" id="n2" placeholder="Enter second number">
+
+<br><br>
+
+<button onclick="calc('+')">+</button>
+<button onclick="calc('-')">-</button>
+<button onclick="calc('*')">*</button>
+<button onclick="calc('/')">/</button>
+
+<h3>Result: <span id="result"></span></h3>
+
+<script>
+function calc(op) {
+    let a = Number(document.getElementById("n1").value);
+    let b = Number(document.getElementById("n2").value);
+    let r;
+
+    if (op == '+') r = a + b;
+    else if (op == '-') r = a - b;
+    else if (op == '*') r = a * b;
+    else if (op == '/') r = a / b;
+
+    document.getElementById("result").innerHTML = r;
+}
+</script>
+
+</body>
+</html>

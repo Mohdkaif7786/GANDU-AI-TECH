@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration</title>
+
+    <style>
+        form {
+            width: 250px;
+            margin: auto;
+            padding: 20px;
+            background: #eee;
+        }
+
+        input {
+            margin: 5px;
+            padding: 5px;
+        }
+    </style>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<form onsubmit="return v()">
+    <h2 style="color:blue">Registration</h2>
+
+    First Name:<br>
+    <input id="n"><br>
+    Password:<br>
+    <input type="password" id="p"><br>
+    Email:<br>
+    <input id="e"><br>
+    Mobile:<br>
+    <input id="m"><br>
+    <input type="submit" value="Register">
+</form>
+<script>
+function v() {
+    let n = document.getElementById("n").value;
+    let p = document.getElementById("p").value;
+    let e = document.getElementById("e").value;
+    let m = document.getElementById("m").value;
+    if (!/^[A-Za-z]{3,}$/.test(n)) {
+        alert("Invalid Name");
+        return false;
+    }
+
+    if (p.length < 6) {
+        alert("Password is too short");
+        return false;
+    }
+
+    if (!/^\w+@\w+\.\w+$/.test(e)) {
+        alert("Invalid Email");
+        return false;
+    }
+
+    if (!/^\d{10}$/.test(m)) {
+        alert("Invalid Mobile");
+        return false;
+    }
+
+    alert("Registration Successful");
+    return true;
+}
+</script>
+
+</body>
+</html>

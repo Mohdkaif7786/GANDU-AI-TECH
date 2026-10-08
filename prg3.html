@@ -1,0 +1,38 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<title>Registration</title>
+
+<style>
+form { width:250px; margin:auto; padding:20px; background:#eee; }
+input { margin:5px; padding:5px; }
+</style>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<form onsubmit="return v()">
+<h2 style="color:green">Registration</h2>
+
+First Name:<br><input id="n"><br>
+Password:<br><input type="password" id="p"><br>
+Email:<br><input id="e"><br>
+Mobile:<br><input id="m"><br>
+
+<input type="submit" value="Register">
+</form>
+
+<script>
+function v() {
+if(!/^[A-Za-z]{6,}$/.test(n.value)) return alert("Invalid Name");
+if(p.value.length<6) return alert("Invalid Password");
+if(!/^\w+@\w+\.\w+$/.test(e.value)) return alert("Invalid Email");
+if(!/^\d{10}$/.test(m.value)) return alert("Invalid Mobile");
+alert("Registration Successful");
+}
+</script>
+
+</body>
+</html>                                                                                                                                                                                         
